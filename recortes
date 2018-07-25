@@ -1,0 +1,165 @@
+
+#data.each_with_index do |line, i|
+#	if % 5 == 0
+#		puts line
+#	end
+#end
+
+
+
+data.each_with_index do |index, val|
+	#puts "Alumno: #{index} para #{val}"
+	#puts "\n"
+		if val == 1
+        	puts "es igual"
+        	index.each do | element |
+        		#print element.split(",").map(&:chomp)
+        		nota.push(element.split(",").map(&:chomp))
+        	end
+        end
+		#nota.push(index[i])
+		#alumno = { nombre: index[0].to_s, notas: notas_alumno }
+		#datos_alumnos.push(alumno)
+end	
+print nota
+file.close
+
+
+
+suma = 0
+i = 1
+data.each_with_index do |alumno, key|
+	data_alumnos = alumno.split(', ').map(&:chomp)
+	nombre = "Gonzalo"
+	
+	if data_alumnos[0]==nombre
+		puts "es igual"
+		print data_alumnos[i]
+		#suma =+ data_alumnos[i]
+		i=i+1
+	end
+
+	#print key
+end
+
+	nombre = index[0].to_s
+	print nombre.include?("Gonzalo") 
+
+
+
+nota = 0
+data.each_with_index do |index, val|
+	#puts "Alumno: #{index} para #{val}"
+	#puts "\n"
+	nombre = index[0].to_s
+	print nombre.include?("Gonzalo")
+		if val == 1
+			num_nota = index.length-1
+        	for i in 1..num_nota
+        		index[i].split(",")
+        		nota += index[i].to_i
+        	end  
+        end
+end	
+print nota
+
+///////////////////////////
+
+file = File.open('alumnos.csv','r')
+#print file.read.split("\n").length # Lee todo el archivo
+data = file.readlines ## Cuando sabemos que debemos separar por linea
+data = data.map{ | element | element.split(',').map(&:strip) } #Quitamos las comas y puntos
+
+################# Metodos ##############
+def add_file(data)
+		puts '* Introduza el nombre del Alumno'
+	    nombre = gets.chomp.strip
+	   	nota = 0
+	   	num_nota = 0
+		data.each_with_index do |index, val|
+		#puts "Alumno: #{index} para #{val}"
+		#puts "\n"
+			if index[0].include?(nombre) 
+				num_nota = index.length-1
+	        	for i in 1..num_nota
+	        		index[i].split(",")
+	        		nota += index[i].to_i
+	        	end  	
+	        end
+		end	
+		promedio = nota/num_nota
+		puts "Su nota sumada es #{nota} y el promedio es #{promedio.to_f}"
+end
+
+def cant_absences(data)
+	return 0 unless array && array.is_a?(Array)
+
+	nested = data.select { |e| e.is_a?(Array) }
+	if nested.empty?
+		1 # this is a leaf
+	else
+		nested.inject(0) { |sum, ary| sum + count_subarrays(ary) }
+	end
+end
+
+def alumnos_aprobados(data)
+		total_aprabados = []
+		aprob = 5	
+		alumnos = Hash.new
+		data.each_with_index do |index, val|
+			notas = 0
+		   	num_nota = 0
+			num_nota = index.length-1
+
+        	for i in 1..num_nota
+        		index[i].split(",")
+        		notas += index[i].to_i
+        	end
+
+	        promedio = notas/num_nota
+	        if promedio.to_f > aprob.to_f
+	        	puts "*************** Aprobados ***************"
+	        	puts "El Alumno #{index[0]} obtuvo una nota total #{notas} y el promedio es #{promedio.to_f}"
+			else
+				puts "*************** Reprobados ***************"
+	        	puts "El Alumno #{index[0]} obtuvo una nota total #{notas} y el promedio es #{promedio.to_f}"
+			end
+		end	
+end
+
+def system_out()
+		puts '***********************************************************************************'
+		puts '******************★ ★ ★ Vuelve Pronto!!!! ★ ★ ★************************************'
+		puts '***********************************************************************************'
+end
+
+puts '***********************************************************************************'
+puts '******************★ ★ ★ Sistema de Control de Notas ★ ★ ★**************************'
+puts '***********************************************************************************'
+puts	'Presione **Enter** para comenzar! :) '
+
+option = gets.chomp
+
+while option != '4'
+	
+	option = gets.chomp
+	puts '****** Opción 1: Generar un archivo con el nombre de cada alumno'
+	puts '****** Opción 2: Cantidad total de Inasistencias'
+	puts '****** Opción 3: Alumnos aprobados'
+	puts '****** Opción 4: Salir del Sistema'
+	
+	option = gets.chomp
+
+	puts case  option
+		when '1' #Permite generar un archivo con el nombre de cada alumno 
+			add_file(data)
+		when '2' #Opción 2: Indica la Cantidad de inasistencia.
+			cant_absences(data)
+		when '3'
+			alumnos_aprobados(data)
+		when '4' 
+			system_out()
+		else
+			'Ingresa un número del 1 al 4'
+	end
+end
